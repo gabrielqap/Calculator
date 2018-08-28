@@ -10,7 +10,7 @@ import imd0412.parkinglot.ParkingLotType;
 public class Calculator {
 	private static final Exception DateFormatException = null;
 	private static final Exception InvalidDataException = null;
-	Boolean bissexto;
+	Boolean bissexto;			/* Boolean para checar se os dois anos são bissextos. */
 	Boolean bissexto2;
 	/**
 	 * Calculates the staying cost in the parking lot.
@@ -35,7 +35,6 @@ public class Calculator {
 		try
 		{
 			if ((checkin.contains("02.30")) || (checkout.contains("02.30")) || (checkin.contains("02.31")) || (checkout.contains("02.31"))) {
-				System.out.println("Show!\n");
 				throw InvalidDataException;
 			}
 			if(checkin.contains("02.29")) {
@@ -50,11 +49,11 @@ public class Calculator {
 		}
 		catch (DateTimeParseException exc)
 		{
-			System.err.printf("%s is not parsable!%n", checkin);
+		//	System.err.printf("%s is not parsable!%n", checkin);
 			throw exc;
 		}
 		
-			System.out.printf("Checkin %s, Checkout %s\n", checkinTime, checkoutTime);
+		//	System.out.printf("Checkin %s, Checkout %s\n", checkinTime, checkoutTime);
 			
 			int year;
 			int year2;
@@ -68,9 +67,7 @@ public class Calculator {
 				
 			year = checkinTime.getYear();
 			year2 = checkoutTime.getYear();
-			System.out.println(year);
 			if (year < 1970 || year > 2018 || year2 < 1970 || year2 > 2018) {
-				System.out.println("Entrou Aqui!\n");
 				throw DateFormatException;
 			}
 			
@@ -83,10 +80,8 @@ public class Calculator {
 			
 			if(bissexto) {
 				if(year % 400 == 0) {
-					System.out.println("É bissexto!\n");
 				}
 				else if((year % 4 == 0) && (year % 100 != 0)) {
-					System.out.println("É bissexto!\n");
 				}
 				else {
 					throw InvalidDataException;
@@ -95,10 +90,8 @@ public class Calculator {
 			
 			if(bissexto2) {
 				if(year2 % 400 == 0) {
-					System.out.println("É bissexto!\n");
 				}
 				else if((year2 % 4 == 0) && (year2 % 100 != 0)) {
-					System.out.println("É bissexto!\n");
 				}
 				else {
 					throw InvalidDataException;
@@ -112,12 +105,13 @@ public class Calculator {
 			long days = duration.toDays();
 			long hours = duration.toHours();
 			long minutes = duration.toMinutes();
-			System.out.printf("Permanência de: %d dias, ou %d horas, ou %d minutos.\n", days, hours, minutes);
+		//	System.out.printf("Permanência de: %d dias, ou %d horas, ou %d minutos.\n", days, hours, minutes);
+			
 			minutes = minutes % 60;
 			hours = hours  % 24;
 						
-			System.out.printf("Data formatada com os dados extraídos: %d-%d-%d %d:%d\n", year, month, dayOfMonth, hour,
-								minute);
+		//	System.out.printf("Data formatada com os dados extraídos: %d-%d-%d %d:%d\n", year, month, dayOfMonth, hour,
+		//						minute);
 			if(type.equals(ParkingLotType.ShortTerm)) {
 				
 				return calculateShortTerm(days,hours,minutes);
@@ -140,60 +134,42 @@ public class Calculator {
 	}
 	
 	Float calculateShortTerm(long days, long hours, long minutes) {
-		System.out.println("Dias: ");
-		System.out.println(days);
-		System.out.println("Horas: ");
-		System.out.println(hours);
-		System.out.println("Minutos: ");
-		System.out.println(hours);
 		if(days == 0 && hours == 0 && minutes == 0) {
 			return (float) 8.0;
 		}
 		if(minutes == 0) {
 			if(hours == 1 && days ==0) {
-				System.out.println("Aqui!\n");
 				return (float) 8.0;
 			}
 			if(hours <= 23 && days == 0) {
-				System.out.println("Aqui! 2\n");
 				return (float) 8.0 + ((hours - 1)*2); 
 			}
 			
 			if(days == 1 && hours == 0) {
-				System.out.println("Aqui 7!\n");
 				return (float) 8.0 + (23*2);
 			}
 
 			hours = hours + (days * 24);
 			
 			if(days <= 7) {
-				System.out.println("Aqui! 3\n");
 				return (float) 8.0 + ((hours - 1)*2) + (50*days);
 			}
 			else {
-
-				System.out.println("Aqui! 4\n");
 				return (float) 8.0 + ((hours - 1)*2) + (50*7) + (30*(days-7));
 			}
 		}
 		
 		else {
 			if(hours < 24 && days == 0) {
-
-				System.out.println("Aqui 5!\n");
 				return (float) 8.0 + (hours*2);
 			}
 			hours = hours + (days*24);
 			
 			if(days <= 7) {
-
-				System.out.println("Aqui 5!\n");
 				return (float) 8.0 + (hours*2) + (50*days);
 			}
 			
 			else {
-
-				System.out.println("Aqui 6!\n");
 				return (float) 8.0 + (hours*2) + (50*7) + (30*(days-7));
 			}
 			

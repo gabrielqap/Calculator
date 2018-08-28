@@ -31,6 +31,8 @@ public class CalculatorExceptionTest {
 		return Arrays.asList(
 				new Object[][] {
 					{"1970.04.08 14:30min", "1970.04.08 15:35min", ParkingLotType.ShortTerm, DateTimeParseException.class},
+					{"1969.12.31 23:59", "1970.04.08 00:00", ParkingLotType.ShortTerm, NullPointerException.class},
+					{"2018.12.31 23:59", "2019.01.01 00:00", ParkingLotType.ShortTerm, NullPointerException.class},
 					{"1970.13.08 14:30", "1970.13.08 15:35", ParkingLotType.ShortTerm, DateTimeParseException.class},
 					{"1970.04.32 14:30", "1970.04.32 15:35", ParkingLotType.ShortTerm, DateTimeParseException.class},
 					{"1970.04.00 14:30", "1970.04.00 15:35", ParkingLotType.ShortTerm, DateTimeParseException.class},

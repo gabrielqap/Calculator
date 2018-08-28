@@ -18,14 +18,14 @@ public class CalculatorTest {
 	public static Collection<Object[]> data(){
 		return Arrays.asList(new Object [][]
 				{
-				{"1970.01.01 00:00","1970.01.01 00:00", ParkingLotType.ShortTerm, 8.0F},
-				{"1970.01.01 00:00","1970.01.01 00:01", ParkingLotType.ShortTerm, 8.0F},
-				{"1970.01.01 00:00", "1970.01.01 00:59", ParkingLotType.ShortTerm, 8.0F},
-				{"1970.01.01 00:00", "1970.01.01 01:00", ParkingLotType.ShortTerm, 8.0F}, 
-				{"1970.01.01 00:00", "1970.01.01 01:01", ParkingLotType.ShortTerm, 10.0F},
-				{"1970.01.01 00:00", "1970.01.01 23:59", ParkingLotType.ShortTerm, 54.0F},
-				{"1970.01.01 00:00", "1970.01.02 00:00", ParkingLotType.ShortTerm, 54.0F},
-				{"1970.01.01 00:00", "1970.01.02 00:01", ParkingLotType.ShortTerm, 106.0F},
+				{"1970.01.01 00:00","1970.01.01 00:00", ParkingLotType.ShortTerm, 8.0F},	//RS1
+				{"1970.01.01 00:00","1970.01.01 00:01", ParkingLotType.ShortTerm, 8.0F},	//RS1
+				{"1970.01.01 00:00", "1970.01.01 00:59", ParkingLotType.ShortTerm, 8.0F},	//RS1
+				{"1970.01.01 00:00", "1970.01.01 01:00", ParkingLotType.ShortTerm, 8.0F}, 	//RS1
+				{"1970.01.01 00:00", "1970.01.01 01:01", ParkingLotType.ShortTerm, 10.0F},	//RS2
+				{"1970.01.01 00:00", "1970.01.01 23:59", ParkingLotType.ShortTerm, 54.0F},	//RS2
+				{"1970.01.01 00:00", "1970.01.02 00:00", ParkingLotType.ShortTerm, 54.0F},	//RS2
+				{"1970.01.01 00:00", "1970.01.02 00:01", ParkingLotType.ShortTerm, 106.0F},	//RS3
 				{"1970.01.01 00:00", "1970.01.07 23:59", ParkingLotType.ShortTerm, 642.0F},
 				{"1970.01.01 00:00", "1970.01.08 00:00", ParkingLotType.ShortTerm, 692.0F},
 				{"1970.01.01 00:00", "1970.01.08 00:01", ParkingLotType.ShortTerm, 694.0F},
