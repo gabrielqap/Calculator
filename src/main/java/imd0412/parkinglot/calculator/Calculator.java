@@ -183,12 +183,12 @@ public class Calculator {
 			if(days <= 7) {
 				return (float) 70.0 + ((days-1)*50);
 			}
-			if(days <= 30) {
-				return (float) 70.0 + (7*50) + ((days-7)*30);
+			if(days < 30) {
+				return (float) 70.0 + (6*50) + ((days-7)*30);
 			}
 			else {
 				long mes = days/30;
-				return (float) 70.0 + (7*50) + ((days-7)*30) + (500*mes);
+				return (float) 70.0 + (6*50) + ((days-7)*30) + (500*mes);
 			}
 		}
 		
