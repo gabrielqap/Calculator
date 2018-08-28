@@ -10,7 +10,8 @@ import imd0412.parkinglot.ParkingLotType;
 public class Calculator {
 	private static final Exception DateFormatException = null;
 	private static final Exception InvalidDataException = null;
-
+	Boolean bissexto;
+	Boolean bissexto2;
 	/**
 	 * Calculates the staying cost in the parking lot.
 	 * 
@@ -29,8 +30,20 @@ public class Calculator {
 		
 		LocalDateTime checkinTime;
 		LocalDateTime checkoutTime;
+		this.bissexto = false;
+		this.bissexto2 = false;
 		try
 		{
+			if ((checkin.contains("02.30")) || (checkout.contains("02.30")) || (checkin.contains("02.31")) || (checkout.contains("02.31"))) {
+				System.out.println("Show!\n");
+				throw InvalidDataException;
+			}
+			if(checkin.contains("02.29")) {
+				this.bissexto = true;
+			}
+			if(checkout.contains("02.29")) {
+				this.bissexto2 = true;
+			}
 			// Transformar de String para objeto data
 			 checkinTime = LocalDateTime.parse(checkin, Constants.DATE_FORMATTER);
 			 checkoutTime = LocalDateTime.parse(checkout, Constants.DATE_FORMATTER);
@@ -44,6 +57,7 @@ public class Calculator {
 			System.out.printf("Checkin %s, Checkout %s\n", checkinTime, checkoutTime);
 			
 			int year;
+			int year2;
 			int month;
 			int dayOfMonth;
 			int hour; 
@@ -53,21 +67,21 @@ public class Calculator {
 			try {
 				
 			year = checkinTime.getYear();
-			if (year < 1970 || year > 2018) {
+			year2 = checkoutTime.getYear();
+			System.out.println(year);
+			if (year < 1970 || year > 2018 || year2 < 1970 || year2 > 2018) {
+				System.out.println("Entrou Aqui!\n");
 				throw DateFormatException;
 			}
+			
+			if(checkoutTime.isBefore(checkinTime)) {
+				throw InvalidDataException;    
+			}
+			
 			month = checkinTime.getMonth().getValue();
-			if(month < 1 || month > 12) {
-				throw DateFormatException;
-			}
 			dayOfMonth = checkinTime.getDayOfMonth();
-			if(dayOfMonth < 1 || dayOfMonth > 31) {
-				throw DateFormatException;
-			}
-			if(dayOfMonth == 30 && month == 2) {
-				throw InvalidDataException;
-			}
-			if(dayOfMonth == 29) {
+			
+			if(bissexto) {
 				if(year % 400 == 0) {
 					System.out.println("É bissexto!\n");
 				}
@@ -78,20 +92,34 @@ public class Calculator {
 					throw InvalidDataException;
 				}
 			}
+			
+			if(bissexto2) {
+				if(year2 % 400 == 0) {
+					System.out.println("É bissexto!\n");
+				}
+				else if((year2 % 4 == 0) && (year2 % 100 != 0)) {
+					System.out.println("É bissexto!\n");
+				}
+				else {
+					throw InvalidDataException;
+				}
+			}
 			hour = checkinTime.getHour();
 			minute = checkinTime.getMinute();
 
 			// Calcular a diferença entre dois objetos data
-						Duration duration = Duration.between(checkinTime, checkoutTime);
-						long days = duration.toDays();
-						long hours = duration.toHours();
-						long minutes = duration.toMinutes();
-						System.out.printf("Permanência de: %d dias, ou %d horas, ou %d minutos.\n", days, hours, minutes);
-						minutes = minutes % 60;
-						hours = hours  % 24;
+			Duration duration = Duration.between(checkinTime, checkoutTime);
+			long days = duration.toDays();
+			long hours = duration.toHours();
+			long minutes = duration.toMinutes();
+			System.out.printf("Permanência de: %d dias, ou %d horas, ou %d minutos.\n", days, hours, minutes);
+			minutes = minutes % 60;
+			hours = hours  % 24;
+						
+			System.out.printf("Data formatada com os dados extraídos: %d-%d-%d %d:%d\n", year, month, dayOfMonth, hour,
+								minute);
 			if(type.equals(ParkingLotType.ShortTerm)) {
-				System.out.printf("Data formatada com os dados extraídos: %d-%d-%d %d:%d\n", year, month, dayOfMonth, hour,
-						minute);
+				
 				return calculateShortTerm(days,hours,minutes);
 			}
 			if (type.equals(ParkingLotType.LongTerm)) {
